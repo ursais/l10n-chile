@@ -15,7 +15,6 @@
                 <page string="Financial Approve" name="financial_approve">
                     <group>
                         <group>
-                            <field name="dicom_ok"/>
                             <field name="dicom_score"/>
                             <field name="dicom_date"/>
                         </group>
@@ -37,7 +36,7 @@
                     type="object"
                     context="{'active_id': id}"
                     icon="fa-users">
-                    <field string="Dicom Logs"
+                    <field string="Dicom History"
                            name="dicom_count"
                            widget="statinfo"/>
                 </button>

@@ -5,6 +5,7 @@
     "name": "Connector - Dicom",
     "version": "12.0.1.0.0",
     "license": "AGPL-3",
+    "depends": ["contacts", ],
     "summary": "Get and store financial score from Dicom",
     "author": "Open Source Integrators, "
               "Konos, "

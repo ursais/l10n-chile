@@ -1,15 +1,19 @@
 # Copyright (C) 2020 Konos
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import api, fields, models
+#!/usr/bin/env python
+# encoding: utf-8 
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 from datetime import datetime
 import requests
+import xml.etree.ElementTree as ET
 import logging
-_logger = logging.getLogger(__name__)
 
+
+_logger = logging.getLogger(__name__)
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
-
 
     dicom_score = fields.Char(
         compute="_get_dicom", inverse="_set_dicom", string="Dicom Score")
@@ -29,10 +33,7 @@ class ResPartner(models.Model):
             if partner_dicom:
                 record.dicom_date = partner_dicom.date
                 record.dicom_score = partner_dicom.dicom_score
-                if partner_dicom.dicom_score < "999":
-                    record.dicom_ok = True
-                else:
-                    record.dicom_ok = False
+
 
     def _set_dicom(self):
         for record in self:
@@ -44,10 +45,7 @@ class ResPartner(models.Model):
                     'date': self.dicom_date,
                     'partner': record.id}
                     self.env['partner.dicom'].create(data)
-            else:
-                _logger.warning("Fecha")
-                _logger.warning(self.dicom_date)
-                _logger.warning(record.dicom_score)
+                    
 
     def _dicom_exist(self):
         dicom_model = self.env['partner.dicom']
@@ -76,46 +74,57 @@ class ResPartner(models.Model):
         dicom_ids = self.mapped('dicom_ids')
         action = \
             self.env.ref(
-                'manantial_partner_dicom.partner_dicom_action').read()[0]
+                'connector_dicom.partner_dicom_action').read()[0]
         if len(dicom_ids) > 0:
             action['domain'] = [('id', 'in', dicom_ids.ids)]
         else:
             action = {'type': 'ir.actions.act_window_close'}
         return action
 
-    def onchange_document(self):
+    def onchange_documents(self):
         conf = self.env["ir.config_parameter"].sudo()
-        user = conf.get_param("partner.dicom.user")
-        password = conf.get_param("partner.dicom.password")
-        baseurl = conf.get_param("partner.dicom.baseurl")
+        username = conf.get_param("dicom.user")
+        password = conf.get_param("dicom.password")
+        url = conf.get_param("dicom.url")
         headers = {'content-type': 'text/xml'}
         rut = self.vat.replace('-', '').replace('CL', '')
-        soap_envelope = '''
-<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:app="http://app.gru01.wse.equifax.cl">
-<soapenv:Header/>
-<soapenv:Body>
-<app:getInforme
-soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
-<Rut>%s</Rut>
-<Serie></Serie>
-<Usuario>%s</Usuario>
-<Clave>%s</Clave>
-<Descripcion></Descripcion>
-</app:getInforme>
-</soapenv:Body>
+        form = '''
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:get="http://cl.equifax.com/schema/Platinum360/GetInformePlatinum360BReq">
+    <soapenv:Header/> 
+    <soapenv:Body>
+        <get:getInformePlatinum360Request> 
+        <get:Username>%s</get:Username> 
+        <get:Password>%s</get:Password> 
+        <get:RUT>%s</get:RUT> 
+        <get:SerialNumber></get:SerialNumber> 
+        <get:IdTransaction></get:IdTransaction> 
+        <get:Platform>6</get:Platform> 
+        <get:Channel>6</get:Channel> 
+        <get:AditionalInformation></get:AditionalInformation> 
+        <get:BoletinConcursal></get:BoletinConcursal> 
+        <get:EspecialInformation>
+            <!--Zero or more repetitions:--> <get:EspecialInformationType>
+            <get:Section></get:Section> 
+            </get:EspecialInformationType>
+            </get:EspecialInformation> 
+        </get:getInformePlatinum360Request>
+    </soapenv:Body> 
 </soapenv:Envelope>
-''' % (rut, user, password)
-        _logger.warning(soap_envelope)
-        response = requests.session().post(baseurl, data=soap_envelope,
-                                           headers=headers)
-        if response.status_code != 200:
-            raise Exception(response.text)
-        else:
-            _logger.warning("Conectado")
+'''  %(username, password, rut)
+        encoded_request = form.encode('utf-8')
+        response = requests.post(url,headers = headers,data = encoded_request)
+        if response==False:
+            raise UserError(_('Connection Error'))
+        Count = 0
+        tree = ET.fromstring(response.text)
+        result = {}
+        for item in tree.getiterator():
+            if Count == 7:
+                self.dicom_score = item.text
+                self.dicom_date = fields.Date.context_today(self)
+            Count += 1
+            
 
     @api.one
     def update_dicom(self):
-        self.onchange_document()
+        self.onchange_documents()

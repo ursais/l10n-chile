@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* manantial_partner_dicom
+# 	* connector_dicom
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e-20191022\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-12 16:09+0000\n"
-"PO-Revision-Date: 2020-01-12 13:22-0300\n"
+"POT-Creation-Date: 2020-04-01 19:18+0000\n"
+"PO-Revision-Date: 2020-04-01 16:28-0300\n"
 "Last-Translator: Nelson Ramírez  <nramirez@konos.cl>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,153 +15,155 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: es\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 
-#. module: manantial_partner_dicom
-#: model_terms:ir.actions.act_window,help:manantial_partner_dicom.partner_dicom_action
+#. module: connector_dicom
+#: model_terms:ir.actions.act_window,help:connector_dicom.partner_dicom_action
 msgid "Click to create a new Dicom's log."
 msgstr "Haga clic para crear un nuevo registro de Dicom."
 
-#. module: manantial_partner_dicom
-#: model:ir.model,name:manantial_partner_dicom.model_res_partner
+#. module: connector_dicom
+#: code:addons/connector_dicom/models/res_partner.py:117
+#, python-format
+msgid "Connection Error"
+msgstr "Error de conexión"
+
+#. module: connector_dicom
+#: model:ir.model,name:connector_dicom.model_res_partner
 msgid "Contact"
 msgstr "Contacto"
 
-#. module: manantial_partner_dicom
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_partner_dicom__created_by
+#. module: connector_dicom
+#: model:ir.model.fields,field_description:connector_dicom.field_partner_dicom__created_by
 msgid "Created By"
-msgstr "Creado por"
+msgstr "Creado Por"
 
-#. module: manantial_partner_dicom
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_partner_dicom__create_uid
+#. module: connector_dicom
+#: model:ir.model.fields,field_description:connector_dicom.field_partner_dicom__create_uid
 msgid "Created by"
 msgstr "Creado por"
 
-#. module: manantial_partner_dicom
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_partner_dicom__create_date
+#. module: connector_dicom
+#: model:ir.model.fields,field_description:connector_dicom.field_partner_dicom__create_date
 msgid "Created on"
 msgstr "Creado el"
 
-#. module: manantial_partner_dicom
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_partner_dicom__creation_date
+#. module: connector_dicom
+#: model:ir.model.fields,field_description:connector_dicom.field_partner_dicom__creation_date
 msgid "Creation Date"
 msgstr "Fecha de Creación"
 
-#. module: manantial_partner_dicom
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_res_partner__dicom_count
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_res_users__dicom_count
+#. module: connector_dicom
+#: model:ir.model.fields,field_description:connector_dicom.field_res_partner__dicom_count
+#: model:ir.model.fields,field_description:connector_dicom.field_res_users__dicom_count
 msgid "Dicom Count"
 msgstr "Contador Dicom"
 
-#. module: manantial_partner_dicom
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_partner_dicom__date
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_res_partner__dicom_date
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_res_users__dicom_date
+#. module: connector_dicom
+#: model:ir.model.fields,field_description:connector_dicom.field_partner_dicom__date
+#: model:ir.model.fields,field_description:connector_dicom.field_res_partner__dicom_date
+#: model:ir.model.fields,field_description:connector_dicom.field_res_users__dicom_date
 msgid "Dicom Date"
 msgstr "Fecha Puntaje"
 
-#. module: manantial_partner_dicom
-#: model_terms:ir.ui.view,arch_db:manantial_partner_dicom.partner_dicom_view_form
-#: model_terms:ir.ui.view,arch_db:manantial_partner_dicom.partner_dicom_view_tree
-#: model_terms:ir.ui.view,arch_db:manantial_partner_dicom.view_partner_form
+#. module: connector_dicom
+#: model_terms:ir.ui.view,arch_db:connector_dicom.view_partner_form
+msgid "Dicom History"
+msgstr "Historia de Dicom"
+
+#. module: connector_dicom
+#: model_terms:ir.ui.view,arch_db:connector_dicom.partner_dicom_view_form
+#: model_terms:ir.ui.view,arch_db:connector_dicom.partner_dicom_view_tree
 msgid "Dicom Logs"
 msgstr "Registros de Dicom"
 
-#. module: manantial_partner_dicom
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_partner_dicom__dicom_score
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_res_partner__dicom_score
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_res_users__dicom_score
+#. module: connector_dicom
+#: model:ir.model.fields,field_description:connector_dicom.field_partner_dicom__dicom_score
+#: model:ir.model.fields,field_description:connector_dicom.field_res_partner__dicom_score
+#: model:ir.model.fields,field_description:connector_dicom.field_res_users__dicom_score
 msgid "Dicom Score"
 msgstr "Indicador de Riesgo"
 
-#. module: manantial_partner_dicom
-#: model_terms:ir.ui.view,arch_db:manantial_partner_dicom.partner_dicom_view_graph
+#. module: connector_dicom
+#: model_terms:ir.ui.view,arch_db:connector_dicom.partner_dicom_view_graph
 msgid "Dicom Score Per Partner"
-msgstr "Puntuación de Dicom por Partner"
+msgstr "Puntuación de Dicom por Contacto"
 
-#. module: manantial_partner_dicom
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_res_partner__dicom_ids
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_res_users__dicom_ids
+#. module: connector_dicom
+#: model:ir.model.fields,field_description:connector_dicom.field_res_partner__dicom_ids
+#: model:ir.model.fields,field_description:connector_dicom.field_res_users__dicom_ids
 msgid "Dicoms"
-msgstr ""
+msgstr "Dicoms"
 
-#. module: manantial_partner_dicom
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_partner_dicom__display_name
+#. module: connector_dicom
+#: model:ir.model.fields,field_description:connector_dicom.field_partner_dicom__display_name
 msgid "Display Name"
 msgstr "Nombre a mostrar"
 
-#. module: manantial_partner_dicom
-#: model_terms:ir.ui.view,arch_db:manantial_partner_dicom.view_partner_dicom_form_ccu
+#. module: connector_dicom
+#: model_terms:ir.ui.view,arch_db:connector_dicom.view_partner_dicom_form_ccu
 msgid "Financial Approve"
 msgstr "Aprobación Financiera"
 
-#. module: manantial_partner_dicom
-#: model_terms:ir.ui.view,arch_db:manantial_partner_dicom.partner_dicom_view_search
+#. module: connector_dicom
+#: model_terms:ir.ui.view,arch_db:connector_dicom.partner_dicom_view_search
 msgid "Group By"
 msgstr "Agrupar por"
 
-#. module: manantial_partner_dicom
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_res_partner__dicom_ok
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_res_users__dicom_ok
-#: model:ir.model.fields,help:manantial_partner_dicom.field_res_partner__dicom_ok
-#: model:ir.model.fields,help:manantial_partner_dicom.field_res_users__dicom_ok
-msgid "Have Dicom?"
-msgstr "¿Tiene Dicom?"
-
-#. module: manantial_partner_dicom
-#: model_terms:ir.actions.act_window,help:manantial_partner_dicom.partner_dicom_action
+#. module: connector_dicom
+#: model_terms:ir.actions.act_window,help:connector_dicom.partner_dicom_action
 msgid ""
 "Here you can add various dicom entries for all partners.\n"
-"            You can also show dicom score for a particular partner using\n"
-"            the search field."
+"                You can also show dicom score for a particular partner using\n"
+"                the search field."
 msgstr ""
 "Aquí puede agregar varias entradas de dicom para todos los socios.\n"
 "            También puede mostrar la puntuación de dicom para un socio en particular usando\n"
 "            el campo de búsqueda."
 
-#. module: manantial_partner_dicom
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_partner_dicom__id
+#. module: connector_dicom
+#: model:ir.model.fields,field_description:connector_dicom.field_partner_dicom__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
-#. module: manantial_partner_dicom
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_partner_dicom____last_update
+#. module: connector_dicom
+#: model:ir.model.fields,field_description:connector_dicom.field_partner_dicom____last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
 
-#. module: manantial_partner_dicom
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_partner_dicom__write_uid
+#. module: connector_dicom
+#: model:ir.model.fields,field_description:connector_dicom.field_partner_dicom__write_uid
 msgid "Last Updated by"
 msgstr "Última actualización por"
 
-#. module: manantial_partner_dicom
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_partner_dicom__write_date
+#. module: connector_dicom
+#: model:ir.model.fields,field_description:connector_dicom.field_partner_dicom__write_date
 msgid "Last Updated on"
 msgstr "Última actualización el"
 
-#. module: manantial_partner_dicom
-#: model:ir.model.fields,field_description:manantial_partner_dicom.field_partner_dicom__partner
-#: model_terms:ir.ui.view,arch_db:manantial_partner_dicom.partner_dicom_view_search
+#. module: connector_dicom
+#: model:ir.model.fields,field_description:connector_dicom.field_partner_dicom__partner
+#: model_terms:ir.ui.view,arch_db:connector_dicom.partner_dicom_view_search
 msgid "Partner"
 msgstr "Empresa"
 
-#. module: manantial_partner_dicom
-#: model_terms:ir.ui.view,arch_db:manantial_partner_dicom.partner_dicom_view_search
+#. module: connector_dicom
+#: model_terms:ir.ui.view,arch_db:connector_dicom.partner_dicom_view_search
 msgid "Partner Dicom"
-msgstr "Dicom de Partner"
+msgstr "Contacto Dicom"
 
-#. module: manantial_partner_dicom
-#: model:ir.model,name:manantial_partner_dicom.model_partner_dicom
+#. module: connector_dicom
+#: model:ir.model,name:connector_dicom.model_partner_dicom
 msgid "Partner log for a Dicom"
-msgstr "Registros Dicom de Partner"
+msgstr "Registros Dicom de Contacto"
 
-#. module: manantial_partner_dicom
-#: model:ir.actions.act_window,name:manantial_partner_dicom.partner_dicom_action
-#: model:ir.ui.menu,name:manantial_partner_dicom.partner_dicom_menu
+#. module: connector_dicom
+#: model:ir.actions.act_window,name:connector_dicom.partner_dicom_action
+#: model:ir.ui.menu,name:connector_dicom.partner_dicom_menu
 msgid "Partner's Dicom"
-msgstr "Dicom de Partner"
+msgstr "Dicom del Contacto"
 
-#. module: manantial_partner_dicom
-#: model_terms:ir.ui.view,arch_db:manantial_partner_dicom.view_partner_dicom_form_ccu
+#. module: connector_dicom
+#: model_terms:ir.ui.view,arch_db:connector_dicom.view_partner_dicom_form_ccu
 msgid "Update Dicom"
 msgstr "Actualizar Dicom"

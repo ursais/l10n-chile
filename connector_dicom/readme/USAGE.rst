@@ -25,11 +25,6 @@ Configuracion
 
 *
 
-Uso
-===
-
-*
-
 Creditos
 ========
 
