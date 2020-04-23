@@ -32,12 +32,11 @@ class ResPartner(models.Model):
 
     @api.constrains('is_company', 'invoicing_policy', 'parent_id')
     def check_invoicing_policy(self):
-        if self.is_company or self.parent_id:
-            if self.invoicing_policy == 'ticket':
+        if not self.parent_id:  # Only check to top parent Partner
+            if self.is_company and self.invoicing_policy == 'ticket':
                 raise UserError(_('The invoicing policy Ticket only applies '
                                   'to individuals.'))
-        else:
-            if self.invoicing_policy != 'ticket':
+            if not self.is_company and self.invoicing_policy != 'ticket':
                 raise UserError(_('The selected invoicing policy only applies'
                                   ' to companies.'))
 
