@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- CAF SII Form View -->
+    <record id="l10n_cl_caf_sii_view_form" model="ir.ui.view">
+        <field name="name">l10n.cl.caf.sii.form</field>
+        <field name="model">l10n_cl.caf.sii</field>
+        <field name="arch" type="xml">
+            <form string="CAF Query from SII">
+                <header>
+                    <button
+                        name="consultar_caf_desde_sii"
+                        type="object"
+                        string="Query SII"
+                        class="oe_highlight"
+                        invisible="state != 'draft'"
+                    />
+                    <button
+                        name="action_reset_to_draft"
+                        type="object"
+                        string="Reset to Draft"
+                        invisible="state == 'draft'"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,consulted"
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="company_id" options="{'no_create': True}" />
+                            <field
+                                name="document_type_id"
+                                options="{'no_create': True}"
+                            />
+                            <field name="date_from" />
+                            <field name="date_to" />
+                        </group>
+                        <group>
+                            <field name="caf_count" invisible="state == 'draft'" />
+                            <field
+                                name="last_query_date"
+                                invisible="state == 'draft'"
+                            />
+                        </group>
+                    </group>
+                    <group string="Response" invisible="state == 'draft'">
+                        <field name="response" nolabel="1" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- CAF SII Tree View -->
+    <record id="l10n_cl_caf_sii_view_tree" model="ir.ui.view">
+        <field name="name">l10n.cl.caf.sii.tree</field>
+        <field name="model">l10n_cl.caf.sii</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="company_id" />
+                <field name="document_type_id" />
+                <field name="date_from" />
+                <field name="date_to" />
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-success="state == 'consulted'"
+                    decoration-danger="state == 'error'"
+                />
+                <field name="last_query_date" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- CAF Auto Monitor Form View -->
+    <record id="l10n_cl_caf_auto_view_form" model="ir.ui.view">
+        <field name="name">l10n.cl.caf.auto.form</field>
+        <field name="model">l10n_cl.caf.auto</field>
+        <field name="arch" type="xml">
+            <form string="CAF Automatic Monitor">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            name="check_caf_availability"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-refresh"
+                        >
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Check Now</span>
+                            </div>
+                        </button>
+                    </div>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="text-bg-danger"
+                        invisible="active"
+                    />
+                    <group>
+                        <group>
+                            <field name="active" invisible="1" />
+                            <field name="company_id" options="{'no_create': True}" />
+                            <field
+                                name="document_type_id"
+                                options="{'no_create': True}"
+                            />
+                        </group>
+                        <group>
+                            <field name="threshold_percentage" />
+                            <field name="threshold_absolute" />
+                        </group>
+                    </group>
+                    <group string="Alert Configuration">
+                        <field name="alert_user_ids" widget="many2many_tags" />
+                    </group>
+                    <group string="Status">
+                        <group>
+                            <field name="last_check_date" />
+                        </group>
+                        <group>
+                            <field name="last_alert_date" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- CAF Auto Monitor Tree View -->
+    <record id="l10n_cl_caf_auto_view_tree" model="ir.ui.view">
+        <field name="name">l10n.cl.caf.auto.tree</field>
+        <field name="model">l10n_cl.caf.auto</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="company_id" />
+                <field name="document_type_id" />
+                <field name="threshold_percentage" />
+                <field name="threshold_absolute" />
+                <field name="last_check_date" />
+                <field name="last_alert_date" />
+                <field name="active" widget="boolean_toggle" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Extend CAF form to show usage statistics -->
+    <record id="l10n_cl_dte_caf_view_form_inherit" model="ir.ui.view">
+        <field name="name">l10n.cl.dte.caf.form.inherit</field>
+        <field name="model">l10n_cl.dte.caf</field>
+        <field name="inherit_id" ref="l10n_cl_edi.view_dte_caf_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='status']" position="after">
+                <field name="used_folios_count" />
+                <field name="available_folios_count" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="l10n_cl_caf_sii_action" model="ir.actions.act_window">
+        <field name="name">CAF Queries</field>
+        <field name="res_model">l10n_cl.caf.sii</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="l10n_cl_caf_auto_action" model="ir.actions.act_window">
+        <field name="name">CAF Monitors</field>
+        <field name="res_model">l10n_cl.caf.auto</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

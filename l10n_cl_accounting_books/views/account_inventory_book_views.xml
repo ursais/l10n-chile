@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Inventory Book Form View -->
+    <record id="view_account_inventory_book_form" model="ir.ui.view">
+        <field name="name">account.inventory.book.form</field>
+        <field name="model">account.inventory.book</field>
+        <field name="arch" type="xml">
+            <form string="Inventory Book">
+                <header>
+                    <button
+                        name="action_generate"
+                        string="Generate"
+                        type="object"
+                        class="btn-primary"
+                        states="draft"
+                    />
+                    <button
+                        name="action_export_xml"
+                        string="Export XML"
+                        type="object"
+                        class="btn-secondary"
+                        states="generated"
+                    />
+                    <button
+                        name="action_reset_to_draft"
+                        string="Reset to Draft"
+                        type="object"
+                        class="btn-secondary"
+                        states="generated"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,generated,exported"
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="company_id" options="{'no_create': True}" />
+                        </group>
+                        <group>
+                            <field name="date_from" />
+                            <field name="date_to" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Initial Balance" name="initial">
+                            <field name="initial_balance_ids" nolabel="1" readonly="1">
+                                <tree>
+                                    <field name="account_code" />
+                                    <field name="account_name" />
+                                    <field name="debit" sum="Total" />
+                                    <field name="credit" sum="Total" />
+                                    <field name="balance" sum="Total" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Final Balance" name="final">
+                            <field name="final_balance_ids" nolabel="1" readonly="1">
+                                <tree>
+                                    <field name="account_code" />
+                                    <field name="account_name" />
+                                    <field name="debit" sum="Total" />
+                                    <field name="credit" sum="Total" />
+                                    <field name="balance" sum="Total" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Inventory Book Tree View -->
+    <record id="view_account_inventory_book_tree" model="ir.ui.view">
+        <field name="name">account.inventory.book.tree</field>
+        <field name="model">account.inventory.book</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <field name="date_from" />
+                <field name="date_to" />
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-success="state == 'exported'"
+                    decoration-info="state == 'generated'"
+                    decoration-muted="state == 'draft'"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Inventory Book Search View -->
+    <record id="view_account_inventory_book_search" model="ir.ui.view">
+        <field name="name">account.inventory.book.search</field>
+        <field name="model">account.inventory.book</field>
+        <field name="arch" type="xml">
+            <search string="Inventory Books">
+                <field name="name" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <filter
+                    string="Draft"
+                    name="draft"
+                    domain="[('state', '=', 'draft')]"
+                />
+                <filter
+                    string="Generated"
+                    name="generated"
+                    domain="[('state', '=', 'generated')]"
+                />
+                <filter
+                    string="Exported"
+                    name="exported"
+                    domain="[('state', '=', 'exported')]"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Company"
+                        name="group_company"
+                        context="{'group_by': 'company_id'}"
+                    />
+                    <filter
+                        string="State"
+                        name="group_state"
+                        context="{'group_by': 'state'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Inventory Book Action -->
+    <record id="action_account_inventory_book" model="ir.actions.act_window">
+        <field name="name">Inventory Books</field>
+        <field name="res_model">account.inventory.book</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_account_inventory_book_search" />
+    </record>
+</odoo>

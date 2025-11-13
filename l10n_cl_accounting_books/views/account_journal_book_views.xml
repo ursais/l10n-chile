@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Journal Book Form View -->
+    <record id="view_account_journal_book_form" model="ir.ui.view">
+        <field name="name">account.journal.book.form</field>
+        <field name="model">account.journal.book</field>
+        <field name="arch" type="xml">
+            <form string="Journal Book">
+                <header>
+                    <button
+                        name="action_generate"
+                        string="Generate"
+                        type="object"
+                        class="btn-primary"
+                        states="draft"
+                    />
+                    <button
+                        name="action_export_xml"
+                        string="Export XML"
+                        type="object"
+                        class="btn-secondary"
+                        states="generated"
+                    />
+                    <button
+                        name="action_reset_to_draft"
+                        string="Reset to Draft"
+                        type="object"
+                        class="btn-secondary"
+                        states="generated"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,generated,exported"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            name="action_view_lines"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-list"
+                            context="{'default_book_id': id}"
+                        >
+                            <field name="line_count" widget="statinfo" string="Lines" />
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="company_id" options="{'no_create': True}" />
+                        </group>
+                        <group>
+                            <field name="date_from" />
+                            <field name="date_to" />
+                        </group>
+                    </group>
+                    <group>
+                        <field
+                            name="journal_ids"
+                            widget="many2many_tags"
+                            options="{'no_create': True}"
+                            placeholder="All journals (leave empty)"
+                        />
+                    </group>
+                    <notebook>
+                        <page string="Summary" name="summary">
+                            <group>
+                                <group>
+                                    <field name="total_debit" />
+                                    <field name="total_credit" />
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Lines" name="lines">
+                            <field name="line_ids" nolabel="1" readonly="1">
+                                <tree>
+                                    <field name="sequence" />
+                                    <field name="date" />
+                                    <field name="journal_code" />
+                                    <field name="move_name" />
+                                    <field name="account_code" />
+                                    <field name="account_id" invisible="1" />
+                                    <field name="partner_id" optional="hide" />
+                                    <field name="name" />
+                                    <field name="debit" sum="Total Debit" />
+                                    <field name="credit" sum="Total Credit" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Journal Book Tree View -->
+    <record id="view_account_journal_book_tree" model="ir.ui.view">
+        <field name="name">account.journal.book.tree</field>
+        <field name="model">account.journal.book</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <field name="date_from" />
+                <field name="date_to" />
+                <field name="line_count" />
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-success="state == 'exported'"
+                    decoration-info="state == 'generated'"
+                    decoration-muted="state == 'draft'"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Journal Book Search View -->
+    <record id="view_account_journal_book_search" model="ir.ui.view">
+        <field name="name">account.journal.book.search</field>
+        <field name="model">account.journal.book</field>
+        <field name="arch" type="xml">
+            <search string="Journal Books">
+                <field name="name" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <filter
+                    string="Draft"
+                    name="draft"
+                    domain="[('state', '=', 'draft')]"
+                />
+                <filter
+                    string="Generated"
+                    name="generated"
+                    domain="[('state', '=', 'generated')]"
+                />
+                <filter
+                    string="Exported"
+                    name="exported"
+                    domain="[('state', '=', 'exported')]"
+                />
+                <separator />
+                <filter
+                    string="This Month"
+                    name="this_month"
+                    domain="[('date_from', '&gt;=', (DateTime.now() - relativedelta(months=1)).strftime('%Y-%m-01')), ('date_to', '&lt;=', (DateTime.now()).strftime('%Y-%m-%d'))]"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Company"
+                        name="group_company"
+                        context="{'group_by': 'company_id'}"
+                    />
+                    <filter
+                        string="State"
+                        name="group_state"
+                        context="{'group_by': 'state'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Journal Book Action -->
+    <record id="action_account_journal_book" model="ir.actions.act_window">
+        <field name="name">Journal Books</field>
+        <field name="res_model">account.journal.book</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_account_journal_book_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Journal Book
+            </p>
+            <p>
+                Generate accounting books required by SII for the selected period.
+            </p>
+        </field>
+    </record>
+</odoo>

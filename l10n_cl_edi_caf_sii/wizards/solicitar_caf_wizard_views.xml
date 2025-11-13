@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Wizard Form View -->
+    <record id="solicitar_caf_wizard_view_form" model="ir.ui.view">
+        <field name="name">solicitar.caf.wizard.form</field>
+        <field name="model">solicitar.caf.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Request CAF from SII">
+                <group>
+                    <group>
+                        <field name="company_id" options="{'no_create': True}" />
+                        <field name="document_type_id" options="{'no_create': True}" />
+                    </group>
+                    <group>
+                        <field name="from_folio" />
+                        <field name="to_folio" />
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="action_query_caf"
+                        type="object"
+                        string="Query CAF"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Wizard Action -->
+    <record id="solicitar_caf_wizard_action" model="ir.actions.act_window">
+        <field name="name">Query CAF from SII</field>
+        <field name="res_model">solicitar.caf.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Add menu item to call wizard -->
+    <menuitem
+        id="menu_solicitar_caf_wizard"
+        name="Query CAF"
+        parent="l10n_cl_edi_caf_sii.menu_l10n_cl_caf_sii_root"
+        action="solicitar_caf_wizard_action"
+        sequence="5"
+    />
+</odoo>

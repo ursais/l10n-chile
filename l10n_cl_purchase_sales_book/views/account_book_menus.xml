@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Root Menu -->
+    <menuitem
+        id="menu_l10n_cl_books_root"
+        name="Purchase/Sales Books"
+        parent="account.menu_finance_reports"
+        sequence="50"
+    />
+
+    <!-- Purchase Book Menu -->
+    <menuitem
+        id="menu_account_purchase_book"
+        name="Purchase Books"
+        parent="menu_l10n_cl_books_root"
+        action="account_purchase_book_action"
+        sequence="10"
+    />
+
+    <!-- Sales Book Menu -->
+    <menuitem
+        id="menu_account_sales_book"
+        name="Sales Books"
+        parent="menu_l10n_cl_books_root"
+        action="account_sales_book_action"
+        sequence="20"
+    />
+
+    <!-- Export Wizard Menu -->
+    <menuitem
+        id="menu_book_export_wizard"
+        name="Generate Book"
+        parent="menu_l10n_cl_books_root"
+        action="book_export_wizard_action"
+        sequence="5"
+    />
+</odoo>

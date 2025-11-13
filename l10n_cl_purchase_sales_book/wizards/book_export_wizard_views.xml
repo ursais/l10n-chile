@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Wizard Form View -->
+    <record id="book_export_wizard_view_form" model="ir.ui.view">
+        <field name="name">book.export.wizard.form</field>
+        <field name="model">book.export.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generate Purchase/Sales Book">
+                <group>
+                    <group>
+                        <field name="book_type" />
+                        <field name="company_id" options="{'no_create': True}" />
+                    </group>
+                    <group>
+                        <field name="date_from" />
+                        <field name="date_to" />
+                        <field name="export_format" />
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="action_export"
+                        type="object"
+                        string="Generate and Export"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Wizard Action -->
+    <record id="book_export_wizard_action" model="ir.actions.act_window">
+        <field name="name">Generate Book</field>
+        <field name="res_model">book.export.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

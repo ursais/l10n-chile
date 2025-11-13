@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_account_book_export_wizard_form" model="ir.ui.view">
+        <field name="name">account.book.export.wizard.form</field>
+        <field name="model">account.book.export.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Export Accounting Book">
+                <group>
+                    <field name="book_type" readonly="1" />
+                    <field
+                        name="journal_book_id"
+                        invisible="book_type != 'journal'"
+                        domain="[('state', '=', 'generated')]"
+                        options="{'no_create': True}"
+                    />
+                    <field
+                        name="ledger_book_id"
+                        invisible="book_type != 'ledger'"
+                        domain="[('state', '=', 'generated')]"
+                        options="{'no_create': True}"
+                    />
+                    <field
+                        name="inventory_book_id"
+                        invisible="book_type != 'inventory'"
+                        domain="[('state', '=', 'generated')]"
+                        options="{'no_create': True}"
+                    />
+                </group>
+                <group>
+                    <field name="file_name" readonly="1" />
+                </group>
+                <footer>
+                    <button
+                        name="action_export"
+                        string="Export XML"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

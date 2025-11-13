@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="purchase_book_report_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>
+                    <span>Purchase Book</span>
+                </h2>
+                <div class="row mt32 mb32">
+                    <div class="col-6">
+                        <strong>Company:</strong> <span
+                        t-field="o.company_id.name"
+                    /><br />
+                        <strong>Period:</strong> <span t-field="o.date_from" /> to <span
+                        t-field="o.date_to"
+                    />
+                    </div>
+                    <div class="col-6">
+                        <strong>Total Net:</strong>
+                        <span t-field="o.total_net" />
+                        <br />
+                        <strong>Total Tax:</strong>
+                        <span t-field="o.total_tax" />
+                        <br />
+                        <strong>Total Amount:</strong>
+                        <span t-field="o.total_amount" />
+                    </div>
+                </div>
+
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Supplier</th>
+                            <th>RUT</th>
+                            <th>Doc Type</th>
+                            <th>Doc Number</th>
+                            <th class="text-end">Net</th>
+                            <th class="text-end">Tax</th>
+                            <th class="text-end">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.line_ids" t-as="line">
+                            <td>
+                                <span t-field="line.invoice_date" />
+                            </td>
+                            <td>
+                                <span t-field="line.partner_id.name" />
+                            </td>
+                            <td>
+                                <span t-field="line.partner_vat" />
+                            </td>
+                            <td>
+                                <span t-field="line.document_type_id.name" />
+                            </td>
+                            <td>
+                                <span t-field="line.document_number" />
+                            </td>
+                            <td class="text-end">
+                                <span t-field="line.net_amount" />
+                            </td>
+                            <td class="text-end">
+                                <span t-field="line.tax_amount" />
+                            </td>
+                            <td class="text-end">
+                                <span t-field="line.total_amount" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <record id="purchase_book_report" model="ir.actions.report">
+        <field name="name">Purchase Book</field>
+        <field name="model">account.purchase.book</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >l10n_cl_purchase_sales_book.purchase_book_report_document</field>
+        <field
+            name="report_file"
+        >l10n_cl_purchase_sales_book.purchase_book_report_document</field>
+        <field name="binding_model_id" ref="model_account_purchase_book" />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

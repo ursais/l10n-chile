@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="menu_account_books"
+        name="Accounting Books"
+        parent="account.menu_finance"
+        sequence="100"
+    />
+
+    <menuitem
+        id="menu_account_journal_book"
+        name="Journal Books"
+        parent="menu_account_books"
+        action="action_account_journal_book"
+        sequence="10"
+    />
+
+    <menuitem
+        id="menu_account_ledger_book"
+        name="Ledger Books"
+        parent="menu_account_books"
+        action="action_account_ledger_book"
+        sequence="20"
+    />
+
+    <menuitem
+        id="menu_account_inventory_book"
+        name="Inventory Books"
+        parent="menu_account_books"
+        action="action_account_inventory_book"
+        sequence="30"
+    />
+</odoo>

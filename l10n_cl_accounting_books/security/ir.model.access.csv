@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_journal_book_user,account.journal.book.user,model_account_journal_book,account.group_account_user,1,1,1,1
+access_account_journal_book_line_user,account.journal.book.line.user,model_account_journal_book_line,account.group_account_user,1,0,0,0
+access_account_ledger_book_user,account.ledger.book.user,model_account_ledger_book,account.group_account_user,1,1,1,1
+access_account_ledger_book_line_user,account.ledger.book.line.user,model_account_ledger_book_line,account.group_account_user,1,0,0,0
+access_account_inventory_book_user,account.inventory.book.user,model_account_inventory_book,account.group_account_user,1,1,1,1
+access_account_inventory_book_line_user,account.inventory.book.line.user,model_account_inventory_book_line,account.group_account_user,1,0,0,0
+access_account_book_export_wizard_user,account.book.export.wizard.user,model_account_book_export_wizard,account.group_account_user,1,1,1,1
+access_account_book_export_user,account.book.export.user,model_account_book_export,account.group_account_user,1,0,0,0

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Extend res.partner form to add SII validation button -->
+    <record id="res_partner_view_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.sii.validation</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <!-- Add button in header for Chilean partners -->
+            <xpath expr="//form/header" position="inside">
+                <button
+                    name="action_validate_rut_with_sii"
+                    type="object"
+                    string="Validate with SII"
+                    class="oe_highlight"
+                    invisible="country_id != %(base.cl)d or not vat"
+                />
+            </xpath>
+
+            <!-- Add SII verification fields -->
+            <xpath expr="//field[@name='vat']" position="after">
+                <field
+                    name="l10n_cl_sii_taxpayer_verified"
+                    invisible="country_id != %(base.cl)d"
+                />
+                <field
+                    name="l10n_cl_sii_verification_date"
+                    invisible="country_id != %(base.cl)d or not l10n_cl_sii_taxpayer_verified"
+                />
+                <field
+                    name="l10n_cl_sii_taxpayer_status"
+                    invisible="country_id != %(base.cl)d or not l10n_cl_sii_taxpayer_verified"
+                />
+            </xpath>
+
+            <!-- Add economic activities in a separate group -->
+            <xpath expr="//page[@name='sales_purchases']" position="after">
+                <page
+                    name="sii_data"
+                    string="SII Data"
+                    invisible="country_id != %(base.cl)d"
+                >
+                    <group string="Economic Activities">
+                        <field name="l10n_cl_sii_taxpayer_activities" nolabel="1" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

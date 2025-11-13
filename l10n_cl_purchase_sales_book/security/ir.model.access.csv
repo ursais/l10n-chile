@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_purchase_book_user,account.purchase.book user,model_account_purchase_book,account.group_account_user,1,1,1,0
+access_account_purchase_book_manager,account.purchase.book manager,model_account_purchase_book,account.group_account_manager,1,1,1,1
+access_account_purchase_book_line_user,account.purchase.book.line user,model_account_purchase_book_line,account.group_account_user,1,0,0,0
+access_account_purchase_book_line_manager,account.purchase.book.line manager,model_account_purchase_book_line,account.group_account_manager,1,1,1,1
+access_account_sales_book_user,account.sales.book user,model_account_sales_book,account.group_account_user,1,1,1,0
+access_account_sales_book_manager,account.sales.book manager,model_account_sales_book,account.group_account_manager,1,1,1,1
+access_account_sales_book_line_user,account.sales.book.line user,model_account_sales_book_line,account.group_account_user,1,0,0,0
+access_account_sales_book_line_manager,account.sales.book.line manager,model_account_sales_book_line,account.group_account_manager,1,1,1,1
+access_account_book_export_user,account.book.export user,model_account_book_export,account.group_account_user,1,0,0,0
+access_book_export_wizard_user,book.export.wizard user,model_book_export_wizard,account.group_account_user,1,1,1,1

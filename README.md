@@ -1,37 +1,93 @@
+# Chilean Localization for Odoo
 
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/l10n-chile&target_branch=18.0)
-[![Pre-commit Status](https://github.com/OCA/l10n-chile/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/OCA/l10n-chile/actions/workflows/pre-commit.yml?query=branch%3A18.0)
-[![Build Status](https://github.com/OCA/l10n-chile/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/OCA/l10n-chile/actions/workflows/test.yml?query=branch%3A18.0)
-[![codecov](https://codecov.io/gh/OCA/l10n-chile/branch/18.0/graph/badge.svg)](https://codecov.io/gh/OCA/l10n-chile)
-[![Translation Status](https://translation.odoo-community.org/widgets/l10n-chile-18-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/l10n-chile-18-0/?utm_source=widget)
+This repository contains Chilean localization modules for Odoo 18.0+.
 
-<!-- /!\ do not modify above this line -->
+## Modules
 
-# l10n-chile
+### Core Modules
 
-l10n-chile
+#### l10n_cl_accounting_books
+Electronic Accounting Books for Chile (Libro Diario, Libro Mayor, Libro de Inventarios y Balances).
+- Compliant with SII regulations
+- Export to XML and PDF
+- Integration with Odoo accounting
 
-<!-- /!\ do not modify below this line -->
+#### l10n_cl_purchase_sales_book
+Purchase and Sales Books for Chilean tax compliance.
+- Libro de Compras (Purchase Book)
+- Libro de Ventas (Sales Book)
+- Integration with DTEs
+- SII-compliant XML export
 
-<!-- prettier-ignore-start -->
+### SII Integration Modules
 
-[//]: # (addons)
+#### l10n_cl_edi_caf_sii
+CAF (Folios Authorization) management with SII web services.
+- Query available CAF from SII
+- Automatic monitoring and alerts
+- Low folio warnings
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+#### l10n_cl_edi_contribuyente
+Chilean taxpayer (RUT) validation and verification.
+- RUT format validation
+- Check digit verification
+- SII taxpayer data query (when API available)
+- JSON API endpoints
 
-[//]: # (end addons)
+#### l10n_cl_edi_libros
+Electronic submission of Purchase and Sales Books to SII.
+- Send Libro de Compras to SII
+- Send Libro de Ventas to SII
+- Track submission status
+- Integration with l10n_cl_edi authentication
 
-<!-- prettier-ignore-end -->
+## Installation
 
-## Licenses
+### Requirements
 
-This repository is licensed under [AGPL-3.0](LICENSE).
+```bash
+pip install zeep lxml requests cryptography
+```
 
-However, each module can have a totally different license, as long as they adhere to Odoo Community Association (OCA)
-policy. Consult each module's `__manifest__.py` file, which contains a `license` key
-that explains its license.
+### Install Modules
 
-----
-OCA, or the [Odoo Community Association](http://odoo-community.org/), is a nonprofit
-organization whose mission is to support the collaborative development of Odoo features
-and promote its widespread use.
+1. Update Odoo addons path to include this repository
+2. Update apps list in Odoo
+3. Install desired modules from Apps menu
+
+## Usage
+
+See each module's README.rst for detailed usage instructions.
+
+## Contributing
+
+This repository follows OCA (Odoo Community Association) guidelines.
+
+### Development
+
+1. Fork the repository
+2. Create a feature branch
+3. Follow OCA coding standards
+4. Add tests (coverage > 80%)
+5. Submit pull request
+
+### Code Standards
+
+- Follow PEP 8
+- Use OCA module structure
+- Write comprehensive tests
+- Document all public methods
+
+## License
+
+AGPL-3
+
+## Maintainers
+
+- Open Source Integrators
+
+## Links
+
+- [OCA Guidelines](https://github.com/OCA/odoo-community.org/blob/master/website/Contribution/CONTRIBUTING.rst)
+- [SII Chile](https://www.sii.cl)
+- [Chilean Electronic Invoicing](https://www.sii.cl/factura_electronica/)

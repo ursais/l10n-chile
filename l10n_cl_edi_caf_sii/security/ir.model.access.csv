@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_l10n_cl_caf_sii_user,l10n_cl.caf.sii user,model_l10n_cl_caf_sii,account.group_account_user,1,1,1,0
+access_l10n_cl_caf_sii_manager,l10n_cl.caf.sii manager,model_l10n_cl_caf_sii,account.group_account_manager,1,1,1,1
+access_l10n_cl_caf_auto_user,l10n_cl.caf.auto user,model_l10n_cl_caf_auto,account.group_account_user,1,0,0,0
+access_l10n_cl_caf_auto_manager,l10n_cl.caf.auto manager,model_l10n_cl_caf_auto,account.group_account_manager,1,1,1,1
+access_solicitar_caf_wizard_user,solicitar.caf.wizard user,model_solicitar_caf_wizard,account.group_account_user,1,1,1,1

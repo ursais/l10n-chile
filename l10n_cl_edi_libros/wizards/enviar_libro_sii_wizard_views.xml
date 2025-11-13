@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Wizard Form View -->
+    <record id="enviar_libro_sii_wizard_view_form" model="ir.ui.view">
+        <field name="name">enviar.libro.sii.wizard.form</field>
+        <field name="model">enviar.libro.sii.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Send Book to SII">
+                <group>
+                    <field name="book_type" />
+                    <field
+                        name="book_id"
+                        invisible="book_type != 'purchase'"
+                        domain="[('state', '=', 'generated'), ('l10n_cl_dte_status', '=', 'not_sent')]"
+                    />
+                    <field
+                        name="sales_book_id"
+                        invisible="book_type != 'sales'"
+                        domain="[('state', '=', 'generated'), ('l10n_cl_dte_status', '=', 'not_sent')]"
+                    />
+                </group>
+                <footer>
+                    <button
+                        name="action_send_to_sii"
+                        type="object"
+                        string="Send to SII"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Wizard Action -->
+    <record id="enviar_libro_sii_wizard_action" model="ir.actions.act_window">
+        <field name="name">Send Book to SII</field>
+        <field name="res_model">enviar.libro.sii.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

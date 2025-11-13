@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Extend Sales Book Form to add SII submission -->
+    <record id="account_sales_book_view_form_inherit" model="ir.ui.view">
+        <field name="name">account.sales.book.form.inherit.sii</field>
+        <field name="model">account.sales.book</field>
+        <field
+            name="inherit_id"
+            ref="l10n_cl_purchase_sales_book.account_sales_book_view_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_export_xml']" position="after">
+                <button
+                    name="action_send_to_sii"
+                    type="object"
+                    string="Send to SII"
+                    class="oe_highlight"
+                    invisible="state != 'generated' or l10n_cl_dte_status != 'not_sent'"
+                />
+                <button
+                    name="action_verify_status_sii"
+                    type="object"
+                    string="Verify Status"
+                    invisible="l10n_cl_dte_status != 'ask_for_status'"
+                />
+            </xpath>
+
+            <xpath expr="//group[1]" position="after">
+                <group
+                    string="SII Submission"
+                    invisible="l10n_cl_dte_status == 'not_sent'"
+                >
+                    <field
+                        name="l10n_cl_dte_status"
+                        widget="badge"
+                        decoration-success="l10n_cl_dte_status == 'accepted'"
+                        decoration-warning="l10n_cl_dte_status == 'ask_for_status'"
+                        decoration-danger="l10n_cl_dte_status == 'rejected'"
+                    />
+                    <field name="l10n_cl_sii_send_ident" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

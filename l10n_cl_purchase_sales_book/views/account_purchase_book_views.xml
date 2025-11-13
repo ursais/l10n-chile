@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Purchase Book Form View -->
+    <record id="account_purchase_book_view_form" model="ir.ui.view">
+        <field name="name">account.purchase.book.form</field>
+        <field name="model">account.purchase.book</field>
+        <field name="arch" type="xml">
+            <form string="Purchase Book">
+                <header>
+                    <button
+                        name="action_generate"
+                        type="object"
+                        string="Generate"
+                        class="oe_highlight"
+                        invisible="state != 'draft'"
+                    />
+                    <button
+                        name="action_export_xml"
+                        type="object"
+                        string="Export XML"
+                        invisible="state != 'generated'"
+                    />
+                    <button
+                        name="action_reset_to_draft"
+                        type="object"
+                        string="Reset to Draft"
+                        invisible="state == 'draft'"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,generated"
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="company_id" options="{'no_create': True}" />
+                            <field name="date_from" />
+                            <field name="date_to" />
+                        </group>
+                        <group>
+                            <field name="total_net" widget="monetary" />
+                            <field name="total_tax" widget="monetary" />
+                            <field name="total_amount" widget="monetary" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="lines" string="Purchase Book Lines">
+                            <field name="line_ids" nolabel="1">
+                                <tree editable="false">
+                                    <field name="invoice_date" />
+                                    <field name="partner_id" />
+                                    <field name="partner_vat" />
+                                    <field name="document_type_id" />
+                                    <field name="document_number" />
+                                    <field name="net_amount" />
+                                    <field name="tax_amount" />
+                                    <field name="total_amount" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Purchase Book Tree View -->
+    <record id="account_purchase_book_view_tree" model="ir.ui.view">
+        <field name="name">account.purchase.book.tree</field>
+        <field name="model">account.purchase.book</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="company_id" />
+                <field name="date_from" />
+                <field name="date_to" />
+                <field name="total_net" />
+                <field name="total_tax" />
+                <field name="total_amount" />
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-success="state == 'generated'"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="account_purchase_book_action" model="ir.actions.act_window">
+        <field name="name">Purchase Books</field>
+        <field name="res_model">account.purchase.book</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

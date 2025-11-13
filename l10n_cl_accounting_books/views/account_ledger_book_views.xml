@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Ledger Book Form View -->
+    <record id="view_account_ledger_book_form" model="ir.ui.view">
+        <field name="name">account.ledger.book.form</field>
+        <field name="model">account.ledger.book</field>
+        <field name="arch" type="xml">
+            <form string="Ledger Book">
+                <header>
+                    <button
+                        name="action_generate"
+                        string="Generate"
+                        type="object"
+                        class="btn-primary"
+                        states="draft"
+                    />
+                    <button
+                        name="action_export_xml"
+                        string="Export XML"
+                        type="object"
+                        class="btn-secondary"
+                        states="generated"
+                    />
+                    <button
+                        name="action_reset_to_draft"
+                        string="Reset to Draft"
+                        type="object"
+                        class="btn-secondary"
+                        states="generated"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,generated,exported"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            name="%(action_account_ledger_book_line)d"
+                            type="action"
+                            class="oe_stat_button"
+                            icon="fa-list"
+                            context="{'search_default_book_id': id}"
+                        >
+                            <field
+                                name="account_count"
+                                widget="statinfo"
+                                string="Accounts"
+                            />
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="company_id" options="{'no_create': True}" />
+                        </group>
+                        <group>
+                            <field name="date_from" />
+                            <field name="date_to" />
+                        </group>
+                    </group>
+                    <group>
+                        <field
+                            name="account_ids"
+                            widget="many2many_tags"
+                            options="{'no_create': True}"
+                            placeholder="All accounts (leave empty)"
+                        />
+                    </group>
+                    <notebook>
+                        <page string="Lines" name="lines">
+                            <field name="line_ids" nolabel="1" readonly="1">
+                                <tree>
+                                    <field name="account_code" />
+                                    <field name="account_name" />
+                                    <field name="debit" sum="Total Debit" />
+                                    <field name="credit" sum="Total Credit" />
+                                    <field name="balance" sum="Total Balance" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Ledger Book Tree View -->
+    <record id="view_account_ledger_book_tree" model="ir.ui.view">
+        <field name="name">account.ledger.book.tree</field>
+        <field name="model">account.ledger.book</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <field name="date_from" />
+                <field name="date_to" />
+                <field name="account_count" />
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-success="state == 'exported'"
+                    decoration-info="state == 'generated'"
+                    decoration-muted="state == 'draft'"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Ledger Book Search View -->
+    <record id="view_account_ledger_book_search" model="ir.ui.view">
+        <field name="name">account.ledger.book.search</field>
+        <field name="model">account.ledger.book</field>
+        <field name="arch" type="xml">
+            <search string="Ledger Books">
+                <field name="name" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <filter
+                    string="Draft"
+                    name="draft"
+                    domain="[('state', '=', 'draft')]"
+                />
+                <filter
+                    string="Generated"
+                    name="generated"
+                    domain="[('state', '=', 'generated')]"
+                />
+                <filter
+                    string="Exported"
+                    name="exported"
+                    domain="[('state', '=', 'exported')]"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Company"
+                        name="group_company"
+                        context="{'group_by': 'company_id'}"
+                    />
+                    <filter
+                        string="State"
+                        name="group_state"
+                        context="{'group_by': 'state'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Ledger Book Action -->
+    <record id="action_account_ledger_book" model="ir.actions.act_window">
+        <field name="name">Ledger Books</field>
+        <field name="res_model">account.ledger.book</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_account_ledger_book_search" />
+    </record>
+
+    <!-- Ledger Book Line Tree View -->
+    <record id="view_account_ledger_book_line_tree" model="ir.ui.view">
+        <field name="name">account.ledger.book.line.tree</field>
+        <field name="model">account.ledger.book.line</field>
+        <field name="arch" type="xml">
+            <tree string="Ledger Book Lines">
+                <field name="account_code" />
+                <field name="account_name" />
+                <field name="debit" sum="Total" />
+                <field name="credit" sum="Total" />
+                <field name="balance" sum="Total" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Ledger Book Line Action -->
+    <record id="action_account_ledger_book_line" model="ir.actions.act_window">
+        <field name="name">Ledger Book Lines</field>
+        <field name="res_model">account.ledger.book.line</field>
+        <field name="view_mode">tree</field>
+    </record>
+</odoo>
