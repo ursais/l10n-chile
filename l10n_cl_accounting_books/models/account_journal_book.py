@@ -26,27 +26,19 @@ class AccountJournalBook(models.Model):
         string="Company",
         required=True,
         default=lambda self: self.env.company,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     date_from = fields.Date(
         string="From Date",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     date_to = fields.Date(
         string="To Date",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     journal_ids = fields.Many2many(
         "account.journal",
         string="Journals",
         help="Leave empty to include all journals",
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     state = fields.Selection(
         [
@@ -84,6 +76,7 @@ class AccountJournalBook(models.Model):
         related="company_id.currency_id",
         string="Company Currency",
         readonly=True,
+        store=False,
     )
     line_count = fields.Integer(
         string="Line Count",
@@ -182,8 +175,10 @@ class AccountJournalBook(models.Model):
                 sequence += 1
 
         # Create lines in batch
+        # Use sudo() to bypass ACLs since this is called from action_generate()
+        # which is a method on the book itself, not on the lines
         if lines_to_create:
-            self.env["account.journal.book.line"].create(lines_to_create)
+            self.env["account.journal.book.line"].sudo().create(lines_to_create)
 
         self.state = "generated"
 
@@ -235,7 +230,7 @@ class AccountJournalBook(models.Model):
             "name": _("Journal Book Lines"),
             "type": "ir.actions.act_window",
             "res_model": "account.journal.book.line",
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "domain": [("book_id", "=", self.id)],
             "context": {"default_book_id": self.id},
         }

@@ -26,27 +26,19 @@ class AccountLedgerBook(models.Model):
         string="Company",
         required=True,
         default=lambda self: self.env.company,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     date_from = fields.Date(
         string="From Date",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     date_to = fields.Date(
         string="To Date",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     account_ids = fields.Many2many(
         "account.account",
         string="Accounts",
         help="Leave empty to include all accounts",
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     state = fields.Selection(
         [
@@ -72,6 +64,7 @@ class AccountLedgerBook(models.Model):
         related="company_id.currency_id",
         string="Company Currency",
         readonly=True,
+        store=False,
     )
     account_count = fields.Integer(
         string="Account Count",
@@ -213,3 +206,15 @@ class AccountLedgerBook(models.Model):
             raise UserError(_("Cannot reset exported book"))
         self.line_ids.unlink()
         self.state = "draft"
+
+    def action_view_lines(self):
+        """Open lines view"""
+        self.ensure_one()
+        return {
+            "name": _("Ledger Book Lines"),
+            "type": "ir.actions.act_window",
+            "res_model": "account.ledger.book.line",
+            "view_mode": "list,form",
+            "domain": [("book_id", "=", self.id)],
+            "context": {"default_book_id": self.id, "search_default_book_id": self.id},
+        }

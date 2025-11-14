@@ -84,4 +84,5 @@ class AccountJournalBookLine(models.Model):
         related="book_id.company_currency_id",
         string="Currency",
         readonly=True,
+        store=False,
     )

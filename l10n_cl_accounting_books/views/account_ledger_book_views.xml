@@ -12,21 +12,21 @@
                         string="Generate"
                         type="object"
                         class="btn-primary"
-                        states="draft"
+                        invisible="state != 'draft'"
                     />
                     <button
                         name="action_export_xml"
                         string="Export XML"
                         type="object"
                         class="btn-secondary"
-                        states="generated"
+                        invisible="state != 'generated'"
                     />
                     <button
                         name="action_reset_to_draft"
                         string="Reset to Draft"
                         type="object"
                         class="btn-secondary"
-                        states="generated"
+                        invisible="state != 'generated'"
                     />
                     <field
                         name="state"
@@ -37,11 +37,11 @@
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button
-                            name="%(action_account_ledger_book_line)d"
-                            type="action"
+                            name="action_view_lines"
+                            type="object"
                             class="oe_stat_button"
                             icon="fa-list"
-                            context="{'search_default_book_id': id}"
+                            context="{'default_book_id': id}"
                         >
                             <field
                                 name="account_count"
@@ -71,13 +71,13 @@
                     <notebook>
                         <page string="Lines" name="lines">
                             <field name="line_ids" nolabel="1" readonly="1">
-                                <tree>
+                                <list>
                                     <field name="account_code" />
                                     <field name="account_name" />
                                     <field name="debit" sum="Total Debit" />
                                     <field name="credit" sum="Total Credit" />
                                     <field name="balance" sum="Total Balance" />
-                                </tree>
+                                </list>
                             </field>
                         </page>
                     </notebook>
@@ -90,8 +90,9 @@
     <record id="view_account_ledger_book_tree" model="ir.ui.view">
         <field name="name">account.ledger.book.tree</field>
         <field name="model">account.ledger.book</field>
+        <field name="type">list</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="company_id" groups="base.group_multi_company" />
                 <field name="date_from" />
@@ -104,7 +105,7 @@
                     decoration-info="state == 'generated'"
                     decoration-muted="state == 'draft'"
                 />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -151,7 +152,7 @@
     <record id="action_account_ledger_book" model="ir.actions.act_window">
         <field name="name">Ledger Books</field>
         <field name="res_model">account.ledger.book</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="view_account_ledger_book_search" />
     </record>
 
@@ -159,14 +160,15 @@
     <record id="view_account_ledger_book_line_tree" model="ir.ui.view">
         <field name="name">account.ledger.book.line.tree</field>
         <field name="model">account.ledger.book.line</field>
+        <field name="type">list</field>
         <field name="arch" type="xml">
-            <tree string="Ledger Book Lines">
+            <list string="Ledger Book Lines">
                 <field name="account_code" />
                 <field name="account_name" />
                 <field name="debit" sum="Total" />
                 <field name="credit" sum="Total" />
                 <field name="balance" sum="Total" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -174,6 +176,6 @@
     <record id="action_account_ledger_book_line" model="ir.actions.act_window">
         <field name="name">Ledger Book Lines</field>
         <field name="res_model">account.ledger.book.line</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
     </record>
 </odoo>

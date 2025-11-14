@@ -26,21 +26,15 @@ class AccountInventoryBook(models.Model):
         string="Company",
         required=True,
         default=lambda self: self.env.company,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     date_from = fields.Date(
         string="From Date",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
         help="Start date of the period (usually beginning of fiscal year)",
     )
     date_to = fields.Date(
         string="To Date",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
         help="End date of the period (usually end of fiscal year)",
     )
     state = fields.Selection(
@@ -78,6 +72,7 @@ class AccountInventoryBook(models.Model):
         related="company_id.currency_id",
         string="Company Currency",
         readonly=True,
+        store=False,
     )
 
     @api.depends("date_from", "date_to", "company_id")
