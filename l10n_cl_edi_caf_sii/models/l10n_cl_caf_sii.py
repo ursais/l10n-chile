@@ -33,20 +33,14 @@ class L10nClCafSii(models.Model):
         string="Document Type",
         required=True,
         domain="[('country_id.code', '=', 'CL')]",
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     date_from = fields.Integer(
         string="From Folio",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     date_to = fields.Integer(
         string="To Folio",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     state = fields.Selection(
         [

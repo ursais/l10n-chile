@@ -57,8 +57,9 @@
     <record id="l10n_cl_caf_sii_view_tree" model="ir.ui.view">
         <field name="name">l10n.cl.caf.sii.tree</field>
         <field name="model">l10n_cl.caf.sii</field>
+        <field name="type">list</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="company_id" />
                 <field name="document_type_id" />
@@ -71,7 +72,7 @@
                     decoration-danger="state == 'error'"
                 />
                 <field name="last_query_date" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -134,8 +135,9 @@
     <record id="l10n_cl_caf_auto_view_tree" model="ir.ui.view">
         <field name="name">l10n.cl.caf.auto.tree</field>
         <field name="model">l10n_cl.caf.auto</field>
+        <field name="type">list</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="company_id" />
                 <field name="document_type_id" />
@@ -144,7 +146,7 @@
                 <field name="last_check_date" />
                 <field name="last_alert_date" />
                 <field name="active" widget="boolean_toggle" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -165,12 +167,12 @@
     <record id="l10n_cl_caf_sii_action" model="ir.actions.act_window">
         <field name="name">CAF Queries</field>
         <field name="res_model">l10n_cl.caf.sii</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <record id="l10n_cl_caf_auto_action" model="ir.actions.act_window">
         <field name="name">CAF Monitors</field>
         <field name="res_model">l10n_cl.caf.auto</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 </odoo>
