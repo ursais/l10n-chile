@@ -10,6 +10,7 @@ _logger = logging.getLogger(__name__)
 
 class AccountPurchaseBook(models.Model):
     _name = "account.purchase.book"
+    _inherit = "account.book.export"
     _description = "Chilean Purchase Book (Libro de Compras)"
     _order = "date_from desc, date_to desc"
 
@@ -26,20 +27,14 @@ class AccountPurchaseBook(models.Model):
         string="Company",
         required=True,
         default=lambda self: self.env.company,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     date_from = fields.Date(
         string="From Date",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     date_to = fields.Date(
         string="To Date",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
     line_ids = fields.One2many(
         "account.purchase.book.line",

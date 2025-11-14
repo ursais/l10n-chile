@@ -47,9 +47,8 @@
                     </group>
                     <notebook>
                         <page name="lines" string="Sales Book Lines">
-                            <field name="line_ids" nolabel="1">
-                                <tree
-                                    editable="false"
+                            <field name="line_ids" nolabel="1" readonly="1">
+                                <list
                                     decoration-success="dte_status == 'accepted'"
                                     decoration-danger="dte_status == 'rejected'"
                                 >
@@ -62,7 +61,7 @@
                                     <field name="net_amount" />
                                     <field name="tax_amount" />
                                     <field name="total_amount" />
-                                </tree>
+                                </list>
                             </field>
                         </page>
                     </notebook>
@@ -75,8 +74,9 @@
     <record id="account_sales_book_view_tree" model="ir.ui.view">
         <field name="name">account.sales.book.tree</field>
         <field name="model">account.sales.book</field>
+        <field name="type">list</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="company_id" />
                 <field name="date_from" />
@@ -89,7 +89,7 @@
                     widget="badge"
                     decoration-success="state == 'generated'"
                 />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -97,6 +97,6 @@
     <record id="account_sales_book_action" model="ir.actions.act_window">
         <field name="name">Sales Books</field>
         <field name="res_model">account.sales.book</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 </odoo>

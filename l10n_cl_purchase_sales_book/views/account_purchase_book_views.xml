@@ -47,8 +47,8 @@
                     </group>
                     <notebook>
                         <page name="lines" string="Purchase Book Lines">
-                            <field name="line_ids" nolabel="1">
-                                <tree editable="false">
+                            <field name="line_ids" nolabel="1" readonly="1">
+                                <list>
                                     <field name="invoice_date" />
                                     <field name="partner_id" />
                                     <field name="partner_vat" />
@@ -57,7 +57,7 @@
                                     <field name="net_amount" />
                                     <field name="tax_amount" />
                                     <field name="total_amount" />
-                                </tree>
+                                </list>
                             </field>
                         </page>
                     </notebook>
@@ -70,8 +70,9 @@
     <record id="account_purchase_book_view_tree" model="ir.ui.view">
         <field name="name">account.purchase.book.tree</field>
         <field name="model">account.purchase.book</field>
+        <field name="type">list</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="company_id" />
                 <field name="date_from" />
@@ -84,7 +85,7 @@
                     widget="badge"
                     decoration-success="state == 'generated'"
                 />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -92,6 +93,6 @@
     <record id="account_purchase_book_action" model="ir.actions.act_window">
         <field name="name">Purchase Books</field>
         <field name="res_model">account.purchase.book</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 </odoo>
