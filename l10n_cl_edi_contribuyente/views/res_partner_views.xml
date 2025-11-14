@@ -7,14 +7,21 @@
         <field name="inherit_id" ref="base.view_partner_form" />
         <field name="arch" type="xml">
             <!-- Add button in header for Chilean partners -->
-            <xpath expr="//form/header" position="inside">
-                <button
-                    name="action_validate_rut_with_sii"
-                    type="object"
-                    string="Validate with SII"
-                    class="oe_highlight"
-                    invisible="country_id != %(base.cl)d or not vat"
-                />
+            <xpath expr="//sheet" position="inside">
+                <div class="oe_button_box" name="button_box">
+                    <button
+                        name="action_validate_rut_with_sii"
+                        type="object"
+                        string="Validate with SII"
+                        class="oe_stat_button"
+                        icon="fa-check-circle"
+                        invisible="country_id != %(base.cl)d or not vat"
+                    >
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_text">Validate RUT</span>
+                        </div>
+                    </button>
+                </div>
             </xpath>
 
             <!-- Add SII verification fields -->
